@@ -1,4 +1,4 @@
-@mixin font-size($px, $base: $font-base) {
+@mixin fontSize($px, $base: $font-base) {
     font-size: $px + px;
     font-size: ($px / $base) * 1rem;
 }
