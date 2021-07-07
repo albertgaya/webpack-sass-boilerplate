@@ -49,8 +49,8 @@ module.exports = (_, argv) => {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            outputPath: (url, resourcePath, context) => /^src\\images/i.test(Path.relative(context, resourcePath)) ? `images/${url}` : `fonts/${url}`,
-                            publicPath: (url, resourcePath, context) => /^src\\images/i.test(Path.relative(context, resourcePath)) ? `../images/${url}` : `../fonts/${url}`
+                            outputPath: (url, resourcePath, context) => /fonts/i.test(Path.relative(context, resourcePath)) ? `fonts/${url}` : `images/${url}`,
+                            publicPath: (url, resourcePath, context) => /fonts/i.test(Path.relative(context, resourcePath)) ? `../fonts/${url}` : `../images/${url}`
                         }
                     }
                 },
@@ -69,7 +69,7 @@ module.exports = (_, argv) => {
         },
 
         plugins: [
-            new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+            new CleanWebpackPlugin(),
             new MiniCssExtractPlugin({ filename: 'css/[name]-[hash].css' }),
             new OptimizeCssAssetsPlugin({ cssProcessorOptions: { map: { inline: true } } }),
             new CopyWebpackPlugin({
