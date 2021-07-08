@@ -20,8 +20,8 @@ module.exports = (_, argv) => {
 
         output: {
             publicPath: Path.resolve(__dirname, 'dist'),
-            filename: 'js/[name]-[hash].js',
-            chunkFilename: 'js/[name]-[hash].js',
+            filename: 'js/[' + (IsProduction ? 'hash' : 'name') + '].js',
+            chunkFilename: 'js/[' + (IsProduction ? 'hash' : 'name') + '].js',
         },
 
         module: {
@@ -49,8 +49,8 @@ module.exports = (_, argv) => {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
-                            outputPath: (url, resourcePath, context) => /fonts/i.test(Path.relative(context, resourcePath)) ? `fonts/${url}` : `images/${url}`,
-                            publicPath: (url, resourcePath, context) => /fonts/i.test(Path.relative(context, resourcePath)) ? `../fonts/${url}` : `../images/${url}`
+                            outputPath: (url, resourcePath, context) => !/fonts/i.test(Path.relative(context, resourcePath)) ? `images/${url}` : `fonts/${url}`,
+                            publicPath: (url, resourcePath, context) => !/fonts/i.test(Path.relative(context, resourcePath)) ? `../images/${url}` : `../fonts/${url}`
                         }
                     }
                 },
@@ -69,8 +69,8 @@ module.exports = (_, argv) => {
         },
 
         plugins: [
-            new CleanWebpackPlugin(),
-            new MiniCssExtractPlugin({ filename: 'css/[name]-[hash].css' }),
+            new CleanWebpackPlugin({ cleanStaleWebpackAssets: IsProduction }),
+            new MiniCssExtractPlugin({ filename: 'css/[' + (IsProduction ? 'hash' : 'name') + '].css' }),
             new OptimizeCssAssetsPlugin({ cssProcessorOptions: { map: { inline: true } } }),
             new CopyWebpackPlugin({
                 patterns: [{
