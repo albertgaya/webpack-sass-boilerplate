@@ -1,6 +1,6 @@
 {
   "name": "webpack-sass-boilerplate",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Frontend Boilerplate using Webpack",
   "scripts": {
     "build": "webpack --mode=development",
